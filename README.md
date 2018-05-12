@@ -14,10 +14,11 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -p PREFIX, --prefix PREFIX
-                        backup file prefix (default: system date in YYYY-MM-DD
-                        format)
+                        backup file prefix (default: system date in YYYY-MM-
+                        DD_ format)
   -a {move,copy}, --action {move,copy}
                         perform one of the actions (default: move)
   --debug               debug output
-  --dry-run             dry run (don't actually move files)
+  --dry-run             don't preform real actions, use with --debug to test
+                        your settings
  ```

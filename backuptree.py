@@ -20,7 +20,7 @@ def backup_tree(src, dst, prefix, file_action, dir_action):
     for root, subdirs, files in os.walk(src):
         dst_dir = os.path.join(dst, os.path.relpath(root, src))
         for file in files:
-            dst_file = os.path.join(dst_dir, "{}_{}".format(prefix, file))
+            dst_file = os.path.join(dst_dir, "{}{}".format(prefix, file))
             src_file = os.path.join(root, file)
             file_action(src_file, dst_file)
         for subdir in subdirs:
@@ -29,14 +29,14 @@ def backup_tree(src, dst, prefix, file_action, dir_action):
             dir_action(dst_subdir)
             
 if __name__ == "__main__":
-    curdate = datetime.datetime.now().strftime("%Y-%m-%d")
+    curdate = datetime.datetime.now().strftime("%Y-%m-%d_")
     argparser = argparse.ArgumentParser(description='Backup directory tree')
     argparser.add_argument('src_path', metavar="SOURCE_PATH", help='source path (should exist)')
     argparser.add_argument('dst_path', metavar="DEST_PATH", help='destination path (should exist)')
-    argparser.add_argument('-p', '--prefix', default=curdate, help='backup file prefix (default: system date in YYYY-MM-DD format)')
+    argparser.add_argument('-p', '--prefix', default=curdate, help='backup file prefix (default: system date in YYYY-MM-DD_ format)')
     argparser.add_argument('-a', '--action', default="move", choices=("move", "copy"), help='perform one of the actions (default: move)')
     argparser.add_argument('--debug', action="store_true", help="debug output")
-    argparser.add_argument('--dry-run', action="store_true", help="dry run (don't actually move files)")
+    argparser.add_argument('--dry-run', action="store_true", help="don't preform real actions, use with --debug to test your settings")
     args = argparser.parse_args()
 
     if args.debug:
