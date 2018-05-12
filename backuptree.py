@@ -11,6 +11,8 @@ import shutil
 logging.basicConfig(level=logging.INFO, format='%(asctime)s: %(message)s')
 
 def backup_tree(src, dst, prefix, file_action, dir_action):
+    if not os.path.exists(src):
+        raise Exception("Source directory does not exist: {}".format(dst))
     if not os.path.exists(dst):
         raise Exception("Desination directory does not exist: {}".format(dst))
     files_count = 0
@@ -29,8 +31,8 @@ def backup_tree(src, dst, prefix, file_action, dir_action):
 if __name__ == "__main__":
     curdate = datetime.datetime.now().strftime("%Y-%m-%d")
     argparser = argparse.ArgumentParser(description='Backup directory tree')
-    argparser.add_argument('src_path', metavar="SOURCE_PATH", help='source path')
-    argparser.add_argument('dst_path', metavar="DEST_PATH", help='destination path')
+    argparser.add_argument('src_path', metavar="SOURCE_PATH", help='source path (should exist)')
+    argparser.add_argument('dst_path', metavar="DEST_PATH", help='destination path (should exist)')
     argparser.add_argument('-p', '--prefix', default=curdate, help='backup file prefix (default: system date in YYYY-MM-DD format)')
     argparser.add_argument('-a', '--action', default="move", choices=("move", "copy"), help='perform one of the actions (default: move)')
     argparser.add_argument('--debug', action="store_true", help="debug output")
@@ -61,7 +63,7 @@ if __name__ == "__main__":
     actions = dict(move=move, copy=copy)
 
     def make_dirs(dir):
-        if os.path.exists(dst_subdir):
+        if os.path.exists(dir):
             return
         if not args.dry_run:
             os.makedirs(dir)
