@@ -1,4 +1,4 @@
-# backup-tree
+# backuptree.py
 Python script to backup directory tree structure.
 
 ```
