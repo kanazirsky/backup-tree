@@ -21,3 +21,44 @@ optional arguments:
   --debug               debug output
   --dry-run             don't preform real actions, use with --debug to test your settings
  ```
+
+# Example
+```
+$> tree test-data
+test-data
+├── a
+│   ├── sub_a
+│   │   ├── sub_sub_a
+│   │   │   └── file_1.data
+│   │   └── sub_sub_b
+│   │       └── file_2.data
+│   └── sub_b
+│       ├── file_3.data
+│       └── sub_sub_a
+└── backup
+
+7 directories, 3 files
+
+$> ./backuptree.py test-data/a test-data/backup
+2018-05-12 21:11:39,217: 3 files, 5 directories processed
+
+$> tree test-data
+test-data
+├── a
+│   ├── sub_a
+│   │   ├── sub_sub_a
+│   │   └── sub_sub_b
+│   └── sub_b
+│       └── sub_sub_a
+└── backup
+    ├── sub_a
+    │   ├── sub_sub_a
+    │   │   └── 2018-05-12_file_1.data
+    │   └── sub_sub_b
+    │       └── 2018-05-12_file_2.data
+    └── sub_b
+        ├── 2018-05-12_file_3.data
+        └── sub_sub_a
+
+12 directories, 3 files
+```
