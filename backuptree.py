@@ -30,11 +30,17 @@ def backup_tree(src, dst, prefix, file_action, dir_action):
             
 if __name__ == "__main__":
     curdate = datetime.datetime.now().strftime("%Y-%m-%d_")
-    argparser = argparse.ArgumentParser(description='Backup directory tree')
+    argparser = argparse.ArgumentParser(
+        description=(
+            "Backup directory tree. "
+            "Make the same directory structure in destination directory and "
+            "add prefix (with current date by default) to each file name."
+        )
+    )
     argparser.add_argument('src_path', metavar="SOURCE_PATH", help='source path (should exist)')
     argparser.add_argument('dst_path', metavar="DEST_PATH", help='destination path (should exist)')
     argparser.add_argument('-p', '--prefix', default=curdate, help='backup file prefix (default: system date in YYYY-MM-DD_ format)')
-    argparser.add_argument('-a', '--action', default="move", choices=("move", "copy"), help='perform one of the actions (default: move)')
+    argparser.add_argument('-a', '--action', default="move", choices=("move", "copy"), help='perform one of the actions with each file (default: move)')
     argparser.add_argument('--debug', action="store_true", help="debug output")
     argparser.add_argument('--dry-run', action="store_true", help="don't preform real actions, use with --debug to test your settings")
     args = argparser.parse_args()
