@@ -26,7 +26,7 @@ def backup_tree(src, dst, prefix, file_action, dir_action):
         for subdir in subdirs:
             dst_subdir = os.path.normpath(os.path.join(dst, os.path.relpath(root, src), subdir))
             src_subdir = os.path.join(root, subdir)
-            dir_action(dst_subdir)
+            dir_action(src_subdir, dst_subdir)
             
 if __name__ == "__main__":
     curdate = datetime.datetime.now().strftime("%Y-%m-%d_")
@@ -68,12 +68,12 @@ if __name__ == "__main__":
 
     actions = dict(move=move, copy=copy)
 
-    def make_dirs(dir):
-        if os.path.exists(dir):
+    def make_dirs(src_subdir, dst_subdir):
+        if os.path.exists(dst_subdir):
             return
         if not args.dry_run:
-            os.makedirs(dir)
-        logging.debug("+ {}".format(dir))
+            os.makedirs(dst_subdir)
+        logging.debug("+ {}".format(dst_subdir))
         count.update(dirs=1)
 
     backup_tree(
