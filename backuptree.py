@@ -51,7 +51,7 @@ if __name__ == "__main__":
         '-p', '--prefix', default=curdate,
         help='backup file prefix (default: system date in YYYY-MM-DD_ format)')
     argparser.add_argument(
-        '-a', '--action', default="move", choices=("move", "copy"),
+        '-a', '--action', default="move", choices=("move", "copy", "noop"),
         help='perform one of the actions with each file (default: move)')
     argparser.add_argument(
         '--debug', action="store_true",
@@ -91,7 +91,10 @@ if __name__ == "__main__":
         logging.debug("c {} -> {}".format(src_file, dst_file))
         count.update(files=1)
 
-    actions = dict(move=move, copy=copy)
+    def noop(src_file, dst_file):
+        logging.debug("n {} -> {}".format(src_file, dst_file))
+
+    actions = dict(move=move, copy=copy, noop=noop)
 
     def make_dirs(src_subdir, dst_subdir):
         if os.path.exists(dst_subdir):
