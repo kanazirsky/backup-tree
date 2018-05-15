@@ -7,6 +7,7 @@ import datetime
 import logging
 import os
 import shutil
+import stat
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s: %(message)s')
 
@@ -75,6 +76,7 @@ if __name__ == "__main__":
                 "Move failed, file {} already exists".format(dst_file)
             )
         if not args.dry_run:
+            os.chmod(src_file ,stat.S_IWRITE)
             shutil.move(src_file, dst_file)
         logging.debug("m {} -> {}".format(src_file, dst_file))
         count.update(files=1)
