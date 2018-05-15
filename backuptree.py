@@ -15,7 +15,7 @@ def backup_tree(src, dst, prefix, file_action, dir_action):
     if not os.path.exists(src):
         raise Exception("Source directory does not exist: {}".format(dst))
     if not os.path.exists(dst):
-        raise Exception("Desination directory does not exist: {}".format(dst))
+        raise Exception("Destination directory does not exist: {}".format(dst))
     files_count = 0
     dirs_count = 0
     for root, subdirs, files in os.walk(src):
